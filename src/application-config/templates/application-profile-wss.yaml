@@ -21,7 +21,7 @@ spec:
     streamingKit:
       envoy:
         enabled: true
-        secretRef: stream-tls-secret
+        secretRef: stream-tls-certificate
         config: |
           static_resources:
             listeners:
@@ -93,7 +93,7 @@ spec:
                           port_value: 49100  # Forwarding to the stream
         tls:
           enabled: true
-          secretRef: stream-tls-secret
+          secretRef: stream-tls-certificate
       image:
         repository: nvcr.io/omniverse/prerel/usd-viewer
         pullPolicy: Always
