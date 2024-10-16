@@ -1,0 +1,6 @@
+apiVersion: v2
+name: application-config
+description: A wrapper around ApplicationProfile / Application / ApplicationVersion NVIDIA CRDs
+type: application
+version: 0.1.0
+appVersion: "1.4.0" # matches with NVIDIA version

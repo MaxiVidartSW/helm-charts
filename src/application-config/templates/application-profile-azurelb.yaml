@@ -1,0 +1,56 @@
+{{ if not .Values.enableStreaming }}
+apiVersion: omniverse.nvidia.com/v1
+kind: ApplicationProfile
+metadata:
+  name: azurelb
+spec:
+  name: AzureLB example profile
+  description: Default profile - uses an AzureLB per stream
+  supportedApplications:
+    - name: usd-viewer
+      versions:
+        - '*'
+  chartMappings:
+    container: streamingKit.image.repository
+    container_version: streamingKit.image.tag
+    name: streamingKit.name
+  chartValues:
+    # global:
+    #   imagePullSecrets:
+    #     - name: regcred
+    streamingKit:
+      image:
+        repository: nvcr.io/omniverse/prerel/usd-viewer
+        pullPolicy: Always
+        tag: 0.2.0
+      envoy:
+        tls:
+          enabled: true
+          secretRef: stream-tls-secret
+      sessionId: session_id
+      service:
+        signalingPort: 31000
+        mediaPort: 31001
+        healthPort: 31002
+        annotations:
+          # NLB configuration
+          service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+          # Security stuff - may need to specify this in `loadBalancerSourceRanges`
+          # service.beta.kubernetes.io/load-balancer-source-ranges: 216.228.125.128/30,216.228.127.128/30,206.223.160.26/32,216.228.125.131/32,216.228.125.128/30,216.228.127.128/30
+          # Health check
+          service.beta.kubernetes.io/port_8080_health-probe_protocol: HTTP
+          service.beta.kubernetes.io/port_8080_health-probe_port: "8080"
+          service.beta.kubernetes.io/port_8080_health-probe_request-path: /health
+        type: LoadBalancer
+      name: kit-app
+      resources:
+        limits:
+          cpu: "3"
+          memory: 20Gi
+          nvidia.com/gpu: "1"
+        requests:
+          nvidia.com/gpu: "1"
+      env:
+        - name: USD_PATH
+          value: /app/data/Forklift_A/Forklift_A01_PR_V_NVD_01.usd
+{{- end -}}

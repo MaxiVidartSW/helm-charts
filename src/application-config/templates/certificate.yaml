@@ -1,0 +1,15 @@
+{{ if .Values.tls.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+    name: {{ .Values.tls.secretName }}
+spec:
+  dnsNames:
+    - {{ .Values.streamBaseUrl }}
+    - '{{ printf "*.%s" .Values.streamBaseUrl }}'
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: {{ .Values.tls.clusterIssuer }}
+  secretName: {{ .Values.tls.secretName }}
+{{- end -}}

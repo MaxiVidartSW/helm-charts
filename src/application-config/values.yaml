@@ -1,0 +1,6 @@
+enableStreaming: false
+streamBaseUrl: xxx
+
+tls:
+  clusterIssuer: letsencrypt
+  secretName: stream-tls-certificate
