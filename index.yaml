@@ -10,6 +10,6 @@ entries:
     name: application-config
     type: application
     urls:
-    - https://maxividartsw.github.io/helm-charts/charts/application-config-0.1.0.tgz
+    - https://maxividartsw.github.io/helm-charts/application-config-0.1.0.tgz
     version: 0.1.0
 generated: "2024-10-16T02:33:39.3299083-03:00"
