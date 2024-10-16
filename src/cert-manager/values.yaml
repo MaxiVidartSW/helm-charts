@@ -1,0 +1,80 @@
+cert-manager:
+  podLabels:
+    azure.workload.identity/use: "true"
+  serviceAccount:
+    name: cert-manager
+    labels:
+      azure.workload.identity/use: "true"
+    annotations:
+      azure.workload.identity/client-id: "TBD" # to be overridden on values set
+  global:
+    rbac:
+      create: true
+  installCRDs: true # Do not change https://cert-manager.io/docs/installation/helm/#helm-installation
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                  - agentpool
+  tolerations:
+    - effect: NoSchedule
+      key: CriticalAddonsOnly
+      operator: Equal
+      value: "true"
+  webhook:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                    - agentpool
+    tolerations:
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+  cainjector:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                    - agentpool
+    tolerations:
+      - effect: NoSchedule
+        key: CriticalAddonsOnly
+        operator: Equal
+        value: "true"
+  startupapicheck:
+    enabled: false
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  extraArgs:
+    - "--dns01-recursive-nameservers-only"
+    - "--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53"
+
+acme:
+  email: darmera@southworks.com
+  server: https://acme-v02.api.letsencrypt.org/directory
+
+clusterIssuer:
+  privateKeySecretRef: lets-encrypt-account-key
+
+azureDns:
+  workloadIdentity:
+    clientId: xxxx
+  zones: []

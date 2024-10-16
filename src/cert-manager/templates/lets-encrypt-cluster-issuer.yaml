@@ -1,0 +1,31 @@
+# clusterissuer-lets-encrypt-staging.yaml
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  annotations: 
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: {{ .Values.acme.email }}
+    server: {{ .Values.acme.server }}
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: {{ .Values.clusterIssuer.privateKeySecretRef }}
+    solvers:
+    {{- range .Values.azureDns.zones }}
+    - selector:
+        dnsZones:
+        - {{ .domain }}
+      dns01:
+        azureDNS:
+          hostedZoneName: {{ .domain }}
+          subscriptionID: {{ .subscriptionId }}
+          resourceGroupName: {{ .resourceGroup }}
+          environment: AzurePublicCloud
+          managedIdentity:
+            clientID: {{ $.Values.azureDns.workloadIdentity.clientId }}
+    {{- end }}
