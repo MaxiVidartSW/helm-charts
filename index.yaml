@@ -3,7 +3,7 @@ entries:
   application-config:
   - apiVersion: v2
     appVersion: 1.4.0
-    created: "2024-10-16T18:05:18.5992455-03:00"
+    created: "2024-10-17T03:43:15.6696102-03:00"
     description: A wrapper around ApplicationProfile / Application / ApplicationVersion
       NVIDIA CRDs
     digest: 6d4d3c997940d706d39f290a03cd0464413d0b806c269d58a592d43024a09ce4
@@ -13,33 +13,17 @@ entries:
     - https://maxividartsw.github.io/helm-charts/application-config-0.1.0.tgz
     version: 0.1.0
   cert-manager:
-  - annotations:
-      artifacthub.io/license: Apache-2.0
-      artifacthub.io/prerelease: "false"
-      artifacthub.io/signKey: |
-        fingerprint: 1020CF3C033D4F35BAE1C19E1226061C665DF13E
-        url: https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
-    apiVersion: v1
-    appVersion: v1.14.4
-    created: "2024-10-16T18:05:18.6117722-03:00"
-    description: A Helm chart for cert-manager
-    digest: 5775fdbc1881d6e510df76d38753af54b86bd14caa8edb28fdbb79527042dede
-    home: https://github.com/cert-manager/cert-manager
-    icon: https://raw.githubusercontent.com/cert-manager/cert-manager/d53c0b9270f8cd90d908460d69502694e1838f5f/logo/logo-small.png
-    keywords:
-    - cert-manager
-    - kube-lego
-    - letsencrypt
-    - tls
-    kubeVersion: '>= 1.22.0-0'
-    maintainers:
-    - email: cert-manager-maintainers@googlegroups.com
-      name: cert-manager-maintainers
-      url: https://cert-manager.io
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-10-17T03:43:15.6743289-03:00"
+    dependencies:
+    - name: cert-manager
+      repository: https://charts.jetstack.io
+      version: 1.14.4
+    digest: 2d1ee6afb88b8c5f65931a80167779aeafeeb998553cc3440f71b35dce4beda7
     name: cert-manager
-    sources:
-    - https://github.com/cert-manager/cert-manager
+    type: application
     urls:
-    - https://maxividartsw.github.io/helm-charts/cert-manager-v1.14.4.tgz
-    version: v1.14.4
-generated: "2024-10-16T18:05:18.5976414-03:00"
+    - https://maxividartsw.github.io/helm-charts/cert-manager-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-10-17T03:43:15.668613-03:00"
