@@ -1,6 +1,8 @@
 enableStreaming: false
 streamBaseUrl: xxx
+appgtwBaseUrl: xxx
 
 tls:
   clusterIssuer: letsencrypt
   secretName: stream-tls-certificate
+  appgtwSecretName: appgtw-tls-certificate
